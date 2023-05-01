@@ -18,15 +18,17 @@ set (HEADER_FILES)
 
 # OpenGL
 find_package(OpenGL REQUIRED)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(third_party/glfw)
 
 include_directories(inc)
 include_directories(third_party/glfw/include)
 include_directories(third_party/glm)
 include_directories(third_party/imgui)
 include_directories(third_party/imgui/backends)
-include_directories(inc)
-link_directories(third_party/glfw/lib-vc2019)
 
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME} glfw3)
+target_link_libraries(${PROJECT_NAME} glfw)
 target_link_libraries(${PROJECT_NAME} opengl32)

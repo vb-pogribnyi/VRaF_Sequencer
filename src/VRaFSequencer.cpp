@@ -1,6 +1,8 @@
 #include "VRaFSequencer.h"
 #include <iostream>
 #include <string>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 // It's private flag in ImGui ImGuiButtonFlags_AllowItemOverlap; but SetItemAllowOverlap() function alone doesn't work
 #define IMGUI_ALLOW_OVERLAP (1 << 12)
@@ -649,10 +651,18 @@ namespace VRaF {
 
     Sequencer::Sequencer(int fps) : fps(fps)
     {
-        ImGuiIO& io = ImGui::GetIO();
-        // For some reason, any font loaded first substitutes the default one
-        labels = io.Fonts->AddFontFromFileTTF("Rajdhani-Regular.ttf", 16);
-        icons = io.Fonts->AddFontFromFileTTF("icons.ttf", 18);
+        fs::path p = fs::current_path();
+        std::cout << p << std::endl;
+        if (!fs::exists("icons.ttf") || !fs::exists("default.ttf")) {
+            std::cout << "Could not find icons.ttf or default.ttf fonts" << std::endl;
+            labels = ImGui::GetFont();
+            icons = ImGui::GetFont();
+        } else {
+            ImGuiIO& io = ImGui::GetIO();
+            // For some reason, any font loaded first substitutes the default one
+            labels = io.Fonts->AddFontFromFileTTF("default.ttf", 16);
+            icons = io.Fonts->AddFontFromFileTTF("icons.ttf", 18);
+        }
 
         dims.titlebarHeight = 18.0f;
         state = {

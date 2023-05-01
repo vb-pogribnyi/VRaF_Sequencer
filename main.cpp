@@ -10,7 +10,7 @@
 int main() {
 	GLFWwindow* window;
 	int width = 900;
-	int height = 900;
+	int height = 400;
 
 	if (!glfwInit()) std::cout << "GLFW init failed" << std::endl;
 	window = glfwCreateWindow(width, height, "GLFW window", 0, 0);
@@ -39,8 +39,8 @@ int main() {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		ImGui::Begin("Sequencer Options");
-		ImGui::DragFloat("Animation value", (float*)&temp_val, 0.01f, 0, 10);
-		ImGui::DragFloat2("Animation value", (float*)&temp_val2, 0.01f, 0, 10);
+		ImGui::SliderFloat("Animation value", (float*)&temp_val, 0, 10);
+		ImGui::SliderFloat2("Animation value", (float*)&temp_val2, 0, 10);
 		ImGui::End();
 		ImGui::Begin("Sequencer", 0, 16);
 		sequencer.draw();
