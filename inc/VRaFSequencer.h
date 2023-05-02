@@ -6,6 +6,8 @@
 
 // Vector Recording and Filtering namespace
 namespace VRaF {
+	class Sequencer;
+
 	struct Event {
 		mutable int time;  // Start time, to be precise
 		mutable int duration;
@@ -64,13 +66,31 @@ namespace VRaF {
 		SECTION_COMMON
 	};
 
+    class SeqIterator
+    {
+	public:
+        SeqIterator(int frame, Sequencer* target);
+		bool operator==(const SeqIterator& other) const {return frame == other.frame && target == other.target;}
+		bool operator!=(const SeqIterator& other) const {return frame != other.frame || target != other.target;}
+		SeqIterator operator++();
+		SeqIterator operator++(int);
+		int operator*() {return frame;}
+	private:
+		int frame;
+		Sequencer* target;
+    };
+
 	class Sequencer
 	{
 	public:
+		friend class SeqIterator;
+
 		Sequencer(int fps=30);
 		void toggle();
 		void draw();
 		void update(float time);
+		SeqIterator begin();
+		SeqIterator end();
 
 		// The target must be contained in an event first.
 		// If the event contains multiple targets, all of them will be recorded

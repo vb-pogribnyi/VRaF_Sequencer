@@ -43,6 +43,11 @@ int main() {
 		ImGui::Begin("Sequencer Options");
 		ImGui::SliderFloat("Animation value", (float*)&temp_val, 0, 10);
 		ImGui::SliderFloat2("Animation value", (float*)&temp_val2, 0, 10);
+
+		// Example of using iterator feature
+		// if (ImGui::Button("Run Loop")) {
+		// 	for (int frame : sequencer) std::cout << frame << ' ' << temp_val << std::endl;
+		// }
 		ImGui::End();
 		ImGui::Begin("Sequencer", 0, 16);
 		sequencer.draw();

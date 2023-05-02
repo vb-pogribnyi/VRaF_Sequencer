@@ -897,4 +897,35 @@ namespace VRaF {
     {
         keyframes.push_back({ frame, *target });
     }
+
+    SeqIterator Sequencer::begin() {
+        state.frame = state.range[0];
+        updateEvents();
+        state.isPlaying = false;
+
+        return SeqIterator(state.frame, this);
+    }
+
+    SeqIterator Sequencer::end() {
+        state.frame = state.range[1] + 1;
+        
+        return SeqIterator(state.frame, this);
+    }
+
+    SeqIterator::SeqIterator(int frame, Sequencer* target) : frame(frame), target(target)
+    {
+    }
+    SeqIterator SeqIterator::operator++()
+    {
+        frame++;
+        target->state.frame = frame;
+        target->updateEvents();
+        return *this;
+    }
+    SeqIterator SeqIterator::operator++(int)
+    {
+        SeqIterator result = *this;
+        ++(*this);
+        return result;
+    }
 }
