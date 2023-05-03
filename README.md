@@ -53,8 +53,8 @@ After the movements have been recordered, they can be replayed in a for-loop. In
 glm::vec3 camera_position;
 glm::vec3 camera_direction;
 VRaF::Sequencer sequencer;
-sequencer.track("Position", &camera.position);
-sequencer.track("Direction", &camera.direction);
+sequencer.track("Position", &camera_position);
+sequencer.track("Direction", &camera_direction);
 
 // Regular render loop...
 
