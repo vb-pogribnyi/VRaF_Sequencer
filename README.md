@@ -43,6 +43,32 @@ The "filter" button will smooth the signal a little bit; so in most cases a few 
 
 ![](images/VRaFSeq_2.gif)
 
+The vectors being controlled may be the camera position and direction:
+
+![](images/cam_control.gif)
+
+After the movements have been recordered, they can be replayed in a for-loop. In order to use them in a slow renderer, for example:
+
+```cpp
+glm::vec3 camera_position;
+glm::vec3 camera_direction;
+VRaF::Sequencer sequencer;
+sequencer.track("Position", &camera.position);
+sequencer.track("Direction", &camera.direction);
+
+// Regular render loop...
+
+if (ImGui::Button("Render")) {
+	for (int frame : sequencer) {
+		// The camera_position and camera_direction will 
+		// be updated automatically.
+		renderer.render(camera_position, camera_direction, std::format("out_{}.png", frame));
+	}
+}
+```
+
+![](images/slow_render.gif)
+
 
 ## Acknowledgments
 
